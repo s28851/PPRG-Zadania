@@ -9,6 +9,8 @@ int main()
     cin >> a;
     cout << endl;
     int tabl[a];
+    int najtabl[a];
+    int iloscnaj = 0;
     
     cout<<"Podaj kolejno " << a <<" liczb calkowitych, po kazdej nacisnij ENTER:";
     
@@ -30,9 +32,21 @@ int main()
         int naj=0;
         for (int i=0;i<a;i++)
         {
-            if (naj<tabl[i]) { naj=tabl[i] ;}
+            if (naj<tabl[i]) { naj=tabl[i]}
+            if (naj=tabl[i]) { najtabl[iloscnaj]=tabl[i]}
+            iloscnaj++;
         }
-        cout<<"Najwieksza liczba w tablicy to " << naj <<endl;
+        if (iloscnaj = 1) {
+            cout << "Najwieksza liczba w tablicy to " << naj << endl;
+        }
+        else {
+            cout << "Jest " << iloscnaj << " najwiekszych liczb. Sa to kolejno: "
+                for (i = 0; i < iloscnaj; i++) {
+                    cout << najtabl[i] << " ";
+                }
+
+            cout << endl << "Koniec programu" << endl;
+        }
     }
     return 0;
 }
