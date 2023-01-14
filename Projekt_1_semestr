@@ -1,69 +1,118 @@
 #include <iostream>
 #include <cstdlib>
 #include <time.h>
-#include <array>
+#include <stdio.h>
+#include <stdlib.h>
 
 using namespace std;
 
+oblicz (int probe[],int start, int stop, ){
+    for(i=start;i<stop;i++){
+        probe
+    }
+}
+for (int i=0,i<b,i++){
+    for (int j
+}
 
-int iloscopcji 
 
+
+int sciezka (int proba [],int a,int b){
+    int i=1;
+    for (int j=-1;j<2;j++){
+        if ((i-1)>-1){
+            proba[i]=proba[i-1];
+            sciezka
+        }
+    }
+    
+    return proba;
+} 
+
+
+
+int sumuj();
+
+int sumuj(int proba[], int tabl[][b], int a, int b, int suma){
+    
+    for(int i=0; i<*b;i++){
+        proba[i]
+    suma+=tabl[*proba[i]][i];
+    }
+    return suma;
+}
 
 int main()
 {
+    
     srand(time(NULL));
-    int a=0;
-    int b=0;
-    int suma=0;
+
+    int a=0; // ilość wierszy tabeli
+    int b=0; // ilość kolumn tabeli
+    
+    
+    
     cout<< "Program obliczajacy najlepsza sciezke w tablicy od lewej strony do prawej" <<endl;
-    cout<< "Podaj liczbe wierszy tablicy" <<endl;
+    cout<< "Podaj liczbe wierszy tablicy:" <<endl;
     cin >> a;
-    cout<< "Podaj liczbe kolumn tablicy" <<endl;
+    cout<< "Podaj liczbe kolumn tablicy:" <<endl;
     cin >> b;
+    cout<<endl << endl << "Podałeś liczby:"<<endl << "Liczba wierszy: " << a << endl<< "Liczba kolumn: " << b <<endl;
     
     int tabl[a][b];
+    
+    if (a<1||b<1){
+        cout<<endl<< "Podałeś nieprawidłowe wymiary tablicy."<<endl<<"KONIEC PROGRAMU.";
+        return 0;
+    }
+    
+    cout << "Została wygenerowana dla Ciebie następująca tablica:" <<endl<< endl;
     
     for (int i=0;i<a;i++){
         for (int j=0;j<b;j++){
             tabl[i][j]=rand() % 10;
-            cout <<tabl[i][j];
+            cout <<tabl[i][j] << " ";
         }
         cout <<endl;
     }
     
-    
+    int suma=0; 
+    int suma_najlepsza=9*b;  // suma liczb najlepszej ścieżki    
     int proba[b];
-    int proba_najlepsza[b];
-    int suma_najlepsza;
+    int sciezka_najlepsza[b];
     
-    for (int i=0;i<b;i++){
-    suma=suma+tabl[proba[i]][i];
+    if (a==1&b==1) {
+        cout<<endl<< "Została wygenerowana jedna liczba: "<< tabl[0][0] <<endl<<"KONIEC PROGRAMU.";
+        return 0;
     }
-
-    /*
     
-    cout << "tablica proba" <<endl;
-    for (int j=0;j<b;j++){
-            proba[j]=rand() % a;
-            cout << proba[j];
+    if (a==1&b>1) {
+        cout <<endl;
+        cout << "Została wygenerowana tablica jednowymiarowa"<<endl;
+        cout << "Nie masz wyboru, najlepsza sciezka prowadzi przez kolejne elementy tabeli: ";
+        for (int i=0;i<b;i++){
+            cout << tabl[0][i] << " ";
+            suma+=tabl[0][i];
+        }
+        cout <<endl;
+        cout << "Ich suma to: "<< suma <<endl<<endl <<endl;
+        cout <<"KONIEC PROGRAMU.";
+    return 0;
     }
-    cout <<endl;
-    */
-
     
-
+    // najlepsza_sciezka=sciezka()
     
+    for (int i=0;i<a;i++){
+        proba[0]=tabl[0][i];
+        // sciezka(proba[b],tabl[a][b],a,b);
+    }
+    
+   
     
     cout << endl << "suma: "<< suma << endl;
 
     
     
-    /*
-    // obliczanie możliwych opcji ruchu
-    for (int i=0;i<a;i++){
-    cout <<endl;
-    }
-    */
-    
     return 0;
 }
+
