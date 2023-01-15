@@ -49,111 +49,87 @@ int czy_koniec (int proba[],int a, int b){
 // kierunek 0-dół, 1-góra
 // koniec 0-nie 1-tak
 
-void generuj_nowa(int *proba, int x, int a, int b, int kierunek){
+void generuj_nowa(int *proba, int x, int a, int b, int kierunek, int poziom){
     // cout << "generuje x="<<x<<" a="<<a <<" b="<<b<<" kierunek="<<kierunek<<endl;
     // cout << "proba = ";
     // for (int i=0;i<b;i++){
     //    cout << proba[i]<<" ";
-    }
-    cout << endl;
+    
     if(kierunek==0){ // kierunek 0 - dół
-            //cout <<"if kierunek 0";
+                     //cout <<"if kierunek 0";
             
-            if ((b-x)>0){
-                
-                if (proba[b-x]<=proba[b-x-1]){
-                    
-                    if (proba[b-x]<(a-1)){
-                        
-                        proba[b-x]++;
-                        
-                        if ((b-x)<(b-1)){
-                            
-                            x--;
-                            generuj_nowa(proba, x, a, b, 1);
-                        }
-                        if ((b-x)==(b-1)){
-                            
-                            return;
-                        }
-                    }
-                    if (proba[b-x]==(a-1)){ 
-                        
-                        x++;
-                        generuj_nowa(proba, x, a, b, 0);
-                    }
-                }
-                else if (proba[b-x]>proba[b-x-1]){
-                    
-                    x++;
-                    generuj_nowa(proba, x, a, b, 0);
-                }
-            }
-            
-            
-            if ((b-x)==0){
-                
+        if ((b-x)>0){
+            if (proba[b-x]<=proba[b-x-1]){
                 if (proba[b-x]<(a-1)){
-                    
                     proba[b-x]++;
-                    x--;
-                    generuj_nowa(proba, x, a, b, 1);
-                }
-                if (proba[b-x]==(a-1)){
-                    
-                    if (czy_koniec(proba,a,b)==1) return;
-                    
-                    else{
-                        
-                    x--;
-                    generuj_nowa(proba, x, a, b, 1);
-                    }
-                }
-            }
-            
-}else if(kierunek==1){
-
-            // cout <<"switch 1";
-            
-            if (proba[b-x]>=proba[b-x-1]){
-                
-                if (proba[b-x]=0){
-                    
                     if ((b-x)<(b-1)){
                         x--;
-                        generuj_nowa(proba, x, a, b, 1);
+                        generuj_nowa(proba, x, a, b, 1, proba[b-x]);
                     }
-                    
                     if ((b-x)==(b-1)){
-                        
                         return;
                     }
                 }
-                    
-                else if (proba[b-x]>0){
-                    
-                    proba[b-x]=(proba[b-x-1]-1);
-                    
-                    if ((b-x)<(b-1)){
-                        
-                        x--;
-                        generuj_nowa(proba, x, a, b, 1);
-                    }
-                    
-                    if ((b-x)==(b-1)){
-                        
-                        return;
-                    }
+                else if (proba[b-x]==(a-1)){ 
+                    x++;
+                    generuj_nowa(proba, x, a, b, 0,proba[b-x]);
                 }
             }
-            else if (proba[b-x]<proba[b-x-1]){
+            else if (proba[b-x]>proba[b-x-1]){
+                x++;
+                generuj_nowa(proba, x, a, b, 0,proba[b-x]);
+            }
+        }
+        else if ((b-x)==0){
+            if (proba[b-x]<(a-1)){
+                proba[b-x]++;
                 x--;
-                generuj_nowa(proba, x, a, b, 1);
+                generuj_nowa(proba, x, a, b, 1, proba[b-x]);
             }
-}else{
+            else if (proba[b-x]==(a-1)){
+                if (czy_koniec(proba,a,b)==1) return;
+                else{
+                x--;
+                generuj_nowa(proba, x, a, b, 1, proba[b-x]);
+                }
+            }
+        }
             
-            // cout << "DEFAULT - jakiś błąd";
+    }else if(kierunek==1){
+        if ((b-x)<(b-1)){
+            if (proba[b-x]>0){
+                if (proba[b-x]=0){
+                    if ((b-x)<(b-1)){
+                        x--;
+                        generuj_nowa(proba, x, a, b, 1, proba[b-x]);
+                    }
+                    if ((b-x)==(b-1)){
+                        return;
+                    }
+                }
+                else if (proba[b-x]>0){
+                    proba[b-x]=poziom+1;
+                    x--;
+                    generuj_nowa(proba, x, a, b, 1,proba[b-x]);
+                    return;
+                }
+            }
+            else if(proba[b-x]==0){
+                x--;
+                generuj_nowa(proba, x, a, b, 1,proba[b-x]);
+            }
+        }
+        else if((b-x)==(b-1)){
+            if (proba[b-x]=0){
+                return;
+            }
+            else if (proba[b-x]>0){
+                proba[b-x]=poziom-1;
+                return;
+            }
+        }
     }
+    return;
 }
 
 
@@ -241,11 +217,13 @@ int main()
     
     do{
         
-        generuj_nowa(proba,1, a, b, 0);
+        generuj_nowa(proba,1, a, b, 0,0);
         suma=0;
         for(int i=0; i<b;i++){
             suma+=tabl[proba[i]][i];
+            cout <<tabl[proba[i]][i];
         }
+        cout<<endl;
         
         if (suma<suma_najlepsza){
             ilosc_rozwiazan=1;
@@ -265,13 +243,13 @@ int main()
     
     cout << endl << "Najlepsza ścieżka to ";
     for(int i=0;i<b;i++){
-        cout << sciezka_najlepsza[i] << " ";
+        cout << tabl[sciezka_najlepsza[i]][i] << " ";
     }    
     cout <<endl;
     cout <<"Suma tego rozwiązania wynosi: " << suma_najlepsza <<endl <<endl;
     
     if (ilosc_rozwiazan>1){
-        cout << ".... ale to nie jest jedyne rozwiżanie, jest ich w sumie: "<<ilosc_rozwiazan<<endl<<endl;
+        cout << ".... ale to nie jest jedyne rozwiążanie, jest ich w sumie: "<<ilosc_rozwiazan<<endl<<endl;
     }
     cout
     << endl <<"Dziękuję. KONIEC PROGRAMU :)" << endl;
