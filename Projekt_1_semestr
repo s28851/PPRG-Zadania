@@ -51,13 +51,13 @@ int czy_koniec (int proba[],int a, int b){
 
 void generuj_nowa(int *proba, int x, int a, int b, int kierunek){
     // cout << "generuje x="<<x<<" a="<<a <<" b="<<b<<" kierunek="<<kierunek<<endl;
-    cout << "proba = ";
-    for (int i=0;i<b;i++){
-        cout << proba[i]<<" ";
+    // cout << "proba = ";
+    // for (int i=0;i<b;i++){
+    //    cout << proba[i]<<" ";
     }
     cout << endl;
     if(kierunek==0){ // kierunek 0 - dół
-            cout <<"if kierunek 0";
+            //cout <<"if kierunek 0";
             
             if ((b-x)>0){
                 
@@ -113,7 +113,7 @@ void generuj_nowa(int *proba, int x, int a, int b, int kierunek){
             
 }else if(kierunek==1){
 
-            cout <<"switch 1";
+            // cout <<"switch 1";
             
             if (proba[b-x]>=proba[b-x-1]){
                 
@@ -152,7 +152,7 @@ void generuj_nowa(int *proba, int x, int a, int b, int kierunek){
             }
 }else{
             
-            cout << "DEFAULT - jakiś błąd";
+            // cout << "DEFAULT - jakiś błąd";
     }
 }
 
