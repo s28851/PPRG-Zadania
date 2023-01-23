@@ -1,0 +1,212 @@
+#include <iostream>
+#include <cstdlib>
+#include <time.h>
+//#include <stdio.h>
+//#include <stdlib.h>
+
+using namespace std;
+
+
+int czy_koniec (int proba[],int a, int b){
+    int sum=0;
+    for (int i=0;i<b;i++){
+        sum+=proba[i];
+    }
+    if (sum==(b*(a-1))) return 1;
+    else return 0;
+}     
+
+void generuj_nowa(int *proba, int x, int a, int b, int kierunek, int poziom){
+    if(kierunek==0){ // kierunek 0 - w lewo, coraz większy x
+        if ((b-x)>0){ // oddalone od lewej o 1 lub więcej
+            if (proba[b-x]<=proba[b-x-1]){ // wyżej lub na równi z lewą kolumną
+                if (proba[b-x]<(a-1)){ // wartość nie osiągnął dna tabeli
+                    proba[b-x]++; // obniża poziom
+                    if ((b-x)<(b-1)){ // zmiana kierunku generowania
+                        x--; // przesuwa w prawo
+                        generuj_nowa(proba, x, a, b, 1, proba[b-x]);
+                    } // generuje nową w prawo
+                    else if ((b-x)==(b-1)){ // skrajna prawa kończy generowanie
+                        return;
+                }   }
+                else if (proba[b-x]==(a-1)){ // wartość osiągnęła dno tabeli
+                    x++; // przesuwa generowanie w lewo
+                    generuj_nowa(proba, x, a, b, 0,proba[b-x]);
+            }   }
+            else if (proba[b-x]>proba[b-x-1]){ // poniżej lewej kolumny
+                x++;
+                generuj_nowa(proba, x, a, b, 0,proba[b-x]);
+        }   }
+        else if ((b-x)==0){ // skrajna lewa pozycja
+            if (proba[b-x]<(a-1)){ // wartość nienajniższa
+                proba[b-x]++; // obniżenie
+                x--;  // przesunięcie w prawo
+                generuj_nowa(proba, x, a, b, 1, proba[b-x]);
+            }
+            else if (proba[b-x]==(a-1)){
+                cout << "doszło do lewego dolnego rogu!!!";
+    }   }   }
+    else if(kierunek==1){ // kierunek w prawo, coraz mniejszy x
+        if (proba[b-x-1]>0){ // jeżeli poniżej górnego
+            proba[b-x]=proba[b-x-1]-1;  // przypisuje wartość poziomu
+            if (x>1){
+                x--;
+                generuj_nowa(proba,x,a,b,1,proba[b-x]);
+            }
+            else if (x==1){
+                return;
+            }
+        }
+        else if (proba[b-x-1]==0){
+            proba[b-x]=0;
+            if (x>1){
+                x--;
+                generuj_nowa(proba, x, a, b, 1, proba[b-x]);
+            }
+            else if (x==1)return;
+        }
+    }
+    return;
+}
+
+
+int main()
+{
+    
+    srand(time(NULL));
+
+    int a=0; // ilość wierszy tabeli
+    int b=0; // ilość kolumn tabeli
+    
+    
+    
+    cout<< "Program obliczajacy najlepsza sciezke w tablicy od lewej strony do prawej" <<endl;
+    cout<< "Podaj liczbe wierszy tablicy:" <<endl;
+    cin >> a;
+    cout<< "Podaj liczbe kolumn tablicy:" <<endl;
+    cin >> b;
+    cout<<endl << endl << "Podałeś liczby:"<<endl << "Liczba wierszy: " << a << endl<< "Liczba kolumn: " << b <<endl;
+    
+    int tabl[a][b];
+    
+    if (a<1||b<1){
+        cout<<endl<< "Podałeś nieprawidłowe wymiary tablicy."<<endl<<"KONIEC PROGRAMU.";
+        return 0;
+    }
+    
+    cout << "Została wygenerowana dla Ciebie następująca tablica:" <<endl<< endl;
+    
+    for (int i=0;i<a;i++){
+        for (int j=0;j<b;j++){
+            tabl[i][j]=rand() % 10;
+            cout <<tabl[i][j] << " ";
+        }
+        cout <<endl;
+    }
+    
+    int suma=0; 
+    int suma_najlepsza=9*b;  // suma liczb najlepszej ścieżki    
+    int ilosc_rozwiazan=0;
+    int sciezka_najlepsza[b];
+    int ilosc_generacji=1;
+    
+    int proba[b]; // scieżka wyjściowa, same zera
+    for (int i=0;i<b;i++){
+        proba[i]=0;
+    }
+    
+    
+    
+    if (a==1&&b==1) {
+        cout<<endl<< "Została wygenerowana jedna liczba: "<< tabl[0][0] <<endl<<"KONIEC PROGRAMU.";
+        return 0;
+    }
+    
+    if (a==1&&b>1) {
+        cout <<endl;
+        cout << "Została wygenerowana tablica jednowymiarowa"<<endl;
+        cout << "Nie masz wyboru, najlepsza sciezka prowadzi przez kolejne elementy tabeli: ";
+        for (int i=0;i<b;i++){
+            cout << tabl[0][i] << " ";
+            suma+=tabl[0][i];
+        }
+        cout <<endl;
+        cout << "Ich suma to: "<< suma <<endl<<endl <<endl;
+        cout <<"KONIEC PROGRAMU.";
+    return 0;
+    }
+    
+    if (a>1&&b==1){
+        int najmniejsza=9;
+        cout <<endl;
+        cout << "Została wygenerowana tablica jednokolumnowa"<<endl;
+        cout << "Nnajmniejszym elementem tabeli jest cyfra: ";
+        for (int i=0;i<a;i++){
+            if (tabl[i][0]<najmniejsza){
+                najmniejsza=tabl[i][0];
+            }
+        }
+        cout << najmniejsza <<endl;
+        cout <<endl;
+        cout <<"KONIEC PROGRAMU.";
+        return 0;
+    }
+    
+    // najlepsza_sciezka=sciezka()
+    
+    
+    suma=0;
+    
+    for(int i=0; i<b;i++){ // obliczanie sumy i drukowanie próby
+        suma+=tabl[proba[i]][i];
+        //cout << tabl[proba[i]][i];
+    }
+    cout<<endl;
+    
+    if (suma<suma_najlepsza){ // jeżeli suma jest najniższa
+        ilosc_rozwiazan++;
+        suma_najlepsza=suma;  // zapisuje nalepszą sumę
+        for(int i=0;i<b;i++){  // zapisuje indexy najlepszej sciezki
+            sciezka_najlepsza[i]=proba[i];
+        }
+    }
+    
+    do{
+        generuj_nowa(proba,1, a, b, 0,0);
+        ilosc_generacji++;
+        suma=0;
+        for(int i=0; i<b;i++){ // sumowanie próby
+            suma+=tabl[proba[i]][i];
+            // cout <<proba[i];
+            // cout <<tabl[proba[i]][i];
+        }
+        // cout<<endl;
+        
+        if (suma<suma_najlepsza){ // sprawdzanie czy próba jest najlepsza
+            ilosc_rozwiazan=1;
+            suma_najlepsza=suma;
+            for(int i=0;i<b;i++){
+                sciezka_najlepsza[i]=proba[i];
+            }
+        }
+        else if (suma==suma_najlepsza){
+            ilosc_rozwiazan++;
+        }
+    }
+    while(czy_koniec(proba, a, b)==0);
+    
+    cout << "Wygenerowana ilość kombinacji: "<< ilosc_generacji<<endl;
+    cout << "Najlepsza ścieżka to ";
+    for(int i=0;i<b;i++){
+        cout << tabl[sciezka_najlepsza[i]][i] << " ";
+    }    
+    cout <<endl;
+    cout <<"Suma tego rozwiązania wynosi: " << suma_najlepsza <<endl <<endl;
+    
+    if (ilosc_rozwiazan>1){
+        cout << ".... ale to nie jest jedyne rozwiążanie, jest ich w sumie: "<<ilosc_rozwiazan<<endl<<endl;
+    }
+    cout
+    << endl <<"Dziękuję. KONIEC PROGRAMU :)" << endl;
+    return 0;
+}
