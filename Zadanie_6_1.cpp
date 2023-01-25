@@ -1,11 +1,5 @@
 #include<iostream>
 using namespace std;
-/*
-bool przez_trzy(int x){
-    if (x%3==0) return true;
-    else return false;
-}
-*/
 
 int main()
 {
@@ -17,15 +11,13 @@ int main()
         cout <<"Podaj liczbę naturalną górnego zakresu sprawdzania :";
         cin >>a;
     }
-    for(int i=0;i<=a;i+5){
+    for(int i=0;i<=a;i++){
         if (i%5==0 && i%3!=0) {ilosc++;
             
         } 
     }
-    cout <<"W zakresie liczb od 0 do "<< a <<endl<<" jest "<< ilosc<< " liczb podzielnych przez 5 i które nie są podzielne przez 3."
+    cout <<"W zakresie liczb od 0 do "<< a <<" jest "<< ilosc<< " liczb podzielnych przez 5 i które nie są podzielne przez 3."
     <<endl<<endl;
     
-    
     cout <<endl<<endl <<"Koniec programu. MD :)";
-    return 0;
-}
+    return 0;}
