@@ -1,0 +1,134 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main()
+{
+    struct student {
+        string imie;
+        string nazwisko;
+        int informa;
+        int matma;
+        int biola;
+        int polak;
+    };
+    
+    student grupa [6];
+    
+    cout << "Program \"Grupa Studentów \", pozwala stworzyć grupę sześciu studentów z ocenami z egzaminów i przeglądać te informacje." <<endl
+    <<"Po kolei podawaj proszę informacje o studentach."<<endl<<endl;
+    
+    for (int i=0;i<6;i++){
+        cout <<"Podaj proszę dane studenta nr "<< i+1<< " :"<<endl;
+        cout <<"Podaj imię: ";
+        cin >>grupa[i].imie;
+        cout <<"Podaj nazwisko: ";
+        cin >>grupa[i].nazwisko;
+        cout <<"Podaj ocenę z informatyki od 0 do 6: ";
+        cin >>grupa[i].informa;
+        while (grupa[i].informa<0||grupa[i].informa>6){
+            cout <<"Podaj ocenę z informatyki od 0 do 6: ";
+            cin >>grupa[i].informa;
+        }
+        cout <<"Podaj ocenę z matematyki od 0 do 6: ";
+        cin >>grupa[i].matma;
+        while (grupa[i].matma<0||grupa[i].matma>6){
+            cout <<"Podaj ocenę z matematyki od 0 do 6: ";
+            cin >>grupa[i].matma;
+        }
+        cout <<"Podaj ocenę z biologii od 0 do 6: ";
+        cin >>grupa[i].biola;
+        while (grupa[i].biola<0||grupa[i].biola>6){
+            cout <<"Podaj ocenę z biologii od 0 do 6: ";
+            cin >>grupa[i].biola;
+        }
+        cout <<"Podaj ocenę z polskiego od 0 do 6: ";
+        cin >>grupa[i].polak;
+        while (grupa[i].polak<0||grupa[i].polak>6){
+            cout <<"Podaj ocenę z polskiego od 0 do 6: ";
+            cin >>grupa[i].polak;
+        }
+        cout <<endl;
+    }
+    
+    for(int g=1;g>0;g++)    // Uruchomienie menu
+    {
+    cout <<"Wybierz co chcesz zrobić:"<<endl
+    <<" 1 - Wydrukować listę studentów i ich ocen"<<endl
+    <<" 2 - Sprawdzić dane studenta"<<endl
+    <<" 3 - Wyjść z programu"<< endl;
+    
+        int menu={0};
+        cin >> menu;
+        switch (menu)
+        {
+        
+        case 1: // Wydruk listy studentów i ich ocen
+            cout <<"Oto zestawienie uczniów i ich ocen:"<<endl;
+            
+            for (int i=0;i<6;i++){
+                cout << "Uczeń nr " << i+1 << " : "<< grupa[i].imie << " "<< grupa[i].nazwisko<<endl;
+                cout << "Ocena z informatyki : "<< grupa[i].informa<<endl;
+                cout << "Ocena z matematyki : "<< grupa[i].matma<<endl;
+                cout << "Ocena z biologii : "<< grupa[i].biola<<endl;
+                cout << "Ocena z polskiego : "<< grupa[i].polak<<endl<<endl;
+            }
+            break;
+        
+        case 2: // wydruk studentów
+            
+            cout << endl << "Podaj numer ucznia i numer przedmiotu a podam Ci dane studenta i oceną z przedmiotu."<<endl
+            <<"Przedmioty:"<<endl
+            <<"1. Informatyka"<<endl 
+            <<"2. Matematyka"<<endl 
+            <<"3. Biologia" <<endl 
+            <<"4. Język polski"<<endl<<endl
+            <<"Podaj numer studenta (1-6): ";
+            int a;
+            int b;
+            cin >> a;
+    
+            while (a<1||a>6){
+                cout <<"Podaj numer studenta (1-6): ";
+                cin >> a;
+            }
+            
+            cout <<"Podaj numer przedmiotu (1-4): ";
+            cin >> b;
+            
+            while (b<1||b>4){
+                cout <<"Podaj numer przedmiotu (1-4): ";
+                cin >> b;
+            }
+            cout <<"Student nr "<< a << grupa[a-1].imie<<" "<< grupa[a-1].nazwisko<<endl; 
+            cout <<"Ocena z ";
+            
+            switch (b){
+                case 1:
+                    cout << "informatyki: "<<grupa[a-1].informa;
+                    break;
+                case 2:
+                    cout << "matematyki: "<<grupa[a-1].informa;
+                    break;
+                case 3:
+                    cout << "bologii: "<<grupa[a-1].informa;
+                    break;
+                case 4:
+                    cout << "jezyka polskiego: "<<grupa[a-1].informa;
+                    break;
+            }
+            
+            break;
+        
+        case 3: // Zakończenie programu
+            cout << endl<<endl<<"Dziękuję. Koniec programu. :)  MD";
+            return 0;
+        
+        default:
+            cout <<"!!! Podales liczbe spoza zakresu !!!" <<endl;
+            
+        }
+        cout<<endl<<endl;
+    }
+    return 0;
+}
